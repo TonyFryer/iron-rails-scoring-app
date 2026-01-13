@@ -1,0 +1,851 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Iron Rails of Nippon Score Calculator</title>
+        <style>
+            body {
+                font-family: Helvetica, Arial, sans-serif;
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 15px;
+            }
+            h1 {
+                text-align: right;
+            }
+            h2 {
+                border-bottom: thin solid black;
+            }
+            footer {
+                border-top: thin solid black;
+                margin-top: 3em;
+                font-size: 12px;
+            }
+            .row {
+                display: flex;
+                gap: 5px;
+                margin: 0 15px 10px 15px;
+                justify-content: space-between;
+            }
+            .shares .row {
+                justify-content: flex-start;
+                gap: 0;
+            }
+            .row-company, .row-player {
+                width: 100%;
+                max-width: 400px;
+                border: thin solid black;
+                border-radius: 5px;
+                padding-top: 0px;
+                margin-bottom: 15px;
+            }
+            .row-company input[type=text], .cash {
+                text-align: right;
+                width: 100px;
+            }
+            .row-company input[type=text], .row-player input {
+                background-color: #eee;
+            }
+            .jnr {
+                background-color: lightgray;
+                color: black;
+            }
+            .jnr-light {
+                background-color: rgb(189, 184, 184);
+            }
+            .npr {
+                background-color: green;
+                color: white;
+            }
+            .npr-light {
+                background-color: rgb(189, 184, 184);
+            }
+            .scr {
+                background-color: red;
+                color: white;
+            }
+            .scr-light {
+                background-color: rgb(189, 184, 184);
+            }
+            .ir {
+                background-color: #CD7F32;
+                color: white;
+            }
+            .ir-light {
+                background-color:rgb(189, 184, 184);
+            }
+            .bsr {
+                background-color: black;
+                color: white;
+            }
+            .bsr-light {
+                background-color: rgb(189, 184, 184);
+            }
+            .jur {
+                background-color: #8DCC43;
+                color: white;
+            }
+            .jur-light {
+                background-color:rgb(189, 184, 184)
+            }
+            .jrc {
+                background-color: #C9ED9F;
+                color: black;
+            }
+            .jrc-light {
+                background-color: rgb(189, 184, 184);
+            }
+            .hr {
+                background-color: #F24EE5;
+                color: white;
+            }
+            .hr-light {
+                background-color: rgb(189, 184, 184);
+            }
+            .msr {
+                background-color: #F2A622;
+                color: black;
+            }
+            .msr-light {
+                background-color: rgb(189, 184, 184);
+            }
+            .esr {
+                background-color:#198ED1;
+                color: white;
+            }
+            .esr-light {
+                background-color: rgb(189, 184, 184);
+            }
+            .sr {
+                background-color: #2A4AA1;
+                color: white;
+            }
+            .sr-light {
+                background-color: rgb(189, 184, 184);
+            }
+            .cr {
+                background-color: yellow;
+                color: black;
+            }
+            .cr-light {
+                background-color: rgb(189, 184, 184);
+            }
+            .cbr {
+                background-color: #6647A1;
+                color: white;
+            }
+            .cbr-light {
+                background-color: rgb(189, 184, 184);
+            }
+            .row-company h3, .row-player h3 {
+                margin: 0;
+                padding: 15px;
+                margin-bottom: 10px;
+            }
+            .value {
+                font-weight: 700;
+            }
+            .shares label {
+                width: 75px;
+                display: inline-block;
+                text-align: center;
+                padding: 5px;
+            }
+            .row-player .shares input {
+                width: 50px;
+                margin-right: 15px;
+                text-align: center;
+            }
+            #companysummary {
+                max-width: 400px;
+            }
+            #companysummary .row {
+                display: none;
+            }
+            #companysummary span.company {
+                display: inline-block;
+                width: 80%;
+                padding: 5px;
+            }
+            #companysummary span.value {
+                display: inline-block;
+                padding: 5px;
+                width: 20%;
+                text-align: right;
+            }
+            .sharevalue {
+                text-align: right;
+                width: 100%;
+                padding: 5px;
+            }
+            #companysummary .row {
+                gap: 0;
+            }
+            .jnr-share, .npr-share, .scr-share, .ir-share, .bsr-share, .jur-share, .jrc-share, .hr-share, .msr-share,,
+            .esr-share, .sr-share, .cr-share, .cbr-share {
+                display: none;
+            }
+            #playersummary {
+                width: 100%;
+            }
+            #playersummary td {
+                text-align: center;
+            }
+            #playersummary .name {
+                text-align: left;
+            }
+            #playersummary .total {
+                font-weight: 700;
+            }
+            select, textarea, input {
+                font-size: 16px;
+            }
+        </style>
+        <script src="scripts.js"></script>
+    </head>
+    <body>
+        <h1>18 BosWash Score Calculator</h1>
+
+        <h2>Companies</h2>
+
+        <div class="row-company">
+            <h3 class="jnr">Japanese National Railway</h3>
+            <div class="row"><span>Company value:</span> <span class="value" id="jnr-value"></span></div>
+            <!-- <div class="row"><span>Asset value:</span> <span id="jnr-assetvalue"></span></div> -->
+            <div class="row"><span>Share value:</span> <input type="text" inputmode="numeric" id="jnr-sharevalue" min="0" onChange="calculate()" /></div>
+            <!-- <div class="row"><span>Cash:</span> <input type="text" inputmode="numeric" id="jnr-cash" min="0" onChange="calculate()" /></div>
+            <div class="row"><span>Own shares held:</span> <input type="text" inputmode="numeric" id="jnr-ownshares" max="3" min="0" onChange="calculate()" /></div>
+            <div class="row">
+            <div class="shares">Other shares held:<br />
+                <input type="checkbox" id="jnr-npr-share" onChange="calculate()" /> <label class="npr" for="jnr-npr-share">NPR</label><br />
+                <input type="checkbox" id="jnr-scr-share" onChange="calculate()" /> <label class="scr" for="jnr-scr-share">SCR</label><br />
+                <input type="checkbox" id="jnr-ir-share" onChange="calculate()" /> <label class="ir" for="jnr-ir-share">IR</label><br />
+                <input type="checkbox" id="jnr-bsr-share" onChange="calculate()" /> <label class="bsr" for="jnr-bsr-share">BSR</label><br />
+                <input type="checkbox" id="jnr-jur-share" onChange="calculate()" /> <label class="jur" for="jnr-jur-share">JUR</label><br />
+                <input type="checkbox" id="jnr-jrc-share" onChange="calculate()" /> <label class="jrc" for="jnr-jrc-share">JRC</label><br />
+                <input type="checkbox" id="jnr-hr-share" onChange="calculate()" /> <label class="hr" for="jnr-hr-share">HR</label><br />
+                <input type="checkbox" id="jnr-msr-share" onChange="calculate()" /> <label class="msr" for="jnr-msr-share">MSR</label><br />
+                <input type="checkbox" id="jnr-esr-share" onChange="calculate()" /> <label class="esr" for="jnr-esr-share">ESR</label><br />
+                <input type="checkbox" id="jnr-sr-share" onChange="calculate()" /> <label class="sr" for="jnr-sr-share">SR</label><br />
+                <input type="checkbox" id="jnr-cr-share" onChange="calculate()" /> <label class="cr" for="jnr-cr-share">CR</label><br />
+                <input type="checkbox" id="jnr-cbr-share" onChange="calculate()" /> <label class="cbr" for="jnr-cbr-share">CBR</label><br />
+            </div>
+            <div>Trains owned:<br />
+                <input type="checkbox" id="jnr-4x3" onChange="calculate()" /> <label for="jnr-4x3">4&times;3</label><br />
+                <input type="checkbox" id="jnr-3x3" onChange="calculate()" /> <label for="jnr-3x3">3&times;3</label><br />
+                <input type="checkbox" id="jnr-4x2" onChange="calculate()" /> <label for="jnr-4x2">4&times;2</label><br />
+                <input type="checkbox" id="jnr-3x2" onChange="calculate()" /> <label for="jnr-3x2">3&times;2</label><br />
+                <input type="checkbox" id="jnr-4_1" onChange="calculate()" /> <label for="jnr-4_1">4</label><br />
+                <input type="checkbox" id="jnr-4_2" onChange="calculate()" /> <label for="jnr-4_2">4</label><br />
+                <input type="checkbox" id="jnr-3_1" onChange="calculate()" /> <label for="jnr-3_1">3</label><br />
+                <input type="checkbox" id="jnr-3_2" onChange="calculate()" /> <label for="jnr-3_2">3</label><br />
+                <input type="checkbox" id="jnr-2_1" onChange="calculate()" /> <label for="jnr-2_1">2</label><br />
+                <input type="checkbox" id="jnr-2_2" onChange="calculate()" /> <label for="jnr-2_2">2</label>
+            </div>
+            </div> -->
+        </div>
+
+        <div class="row-company">
+            <h3 class="npr">Northern Prefect Railway</h3>
+            <div class="row"><span>Company value:</span> <span class="value" id="npr-value"></span></div>
+            <div class="row"><span>Asset value:</span> <span id="npr-assetvalue"></span></div>
+            <div class="row"><span>Share value:</span> <input type="text" inputmode="numeric" id="npr-sharevalue" min="0" onChange="calculate()" /></div>
+            <div class="row"><span>Cash:</span> <input type="text" inputmode="numeric" id="npr-cash" min="0" onChange="calculate()" /></div>
+            <div class="row"><span>Own shares held:</span> <input type="text" inputmode="numeric" id="npr-ownshares" max="3" min="0" onChange="calculate()" /></div>
+            <div class="row">
+            <div class="shares">Other shares held:<br />
+                <input type="checkbox" id="npr-jnr-share" onChange="calculate()" /> <label class="jnr" for="npr-jnr-share">JNR</label><br />
+                <input type="checkbox" id="npr-scr-share" onChange="calculate()" /> <label class="scr" for="npr-scr-share">SCR</label><br />
+                <input type="checkbox" id="npr-ir-share" onChange="calculate()" /> <label class="ir" for="npr-ir-share">IR</label><br />
+                <input type="checkbox" id="npr-bsr-share" onChange="calculate()" /> <label class="bsr" for="npr-bsr-share">BSR</label><br />
+                <input type="checkbox" id="npr-jur-share" onChange="calculate()" /> <label class="jur" for="npr-jur-share">JUR</label><br />
+                <input type="checkbox" id="npr-jrc-share" onChange="calculate()" /> <label class="jrc" for="npr-jrc-share">JRC</label><br />
+                <input type="checkbox" id="npr-hr-share" onChange="calculate()" /> <label class="hr" for="npr-hr-share">HR</label><br />
+                <input type="checkbox" id="npr-msr-share" onChange="calculate()" /> <label class="msr" for="npr-msr-share">MSR</label><br />
+                <input type="checkbox" id="npr-esr-share" onChange="calculate()" /> <label class="esr" for="npr-esr-share">ESR</label><br />
+                <input type="checkbox" id="npr-sr-share" onChange="calculate()" /> <label class="sr" for="npr-sr-share">SR</label><br />
+                <input type="checkbox" id="npr-cr-share" onChange="calculate()" /> <label class="cr" for="npr-cr-share">CR</label><br />
+                <input type="checkbox" id="npr-cbr-share" onChange="calculate()" /> <label class="cbr" for="npr-cbr-share">CBR</label><br />
+            </div>
+            <div>Trains owned:<br />
+                <input type="checkbox" id="npr-4x3" onChange="calculate()" /> <label for="npr-4x3">4&times;3</label><br />
+                <input type="checkbox" id="npr-3x3" onChange="calculate()" /> <label for="npr-3x3">3&times;3</label><br />
+                <input type="checkbox" id="npr-4x2" onChange="calculate()" /> <label for="npr-4x2">4&times;2</label><br />
+                <input type="checkbox" id="npr-3x2" onChange="calculate()" /> <label for="npr-3x2">3&times;2</label><br />
+                <input type="checkbox" id="npr-4_1" onChange="calculate()" /> <label for="npr-4_1">4</label><br />
+                <input type="checkbox" id="npr-4_2" onChange="calculate()" /> <label for="npr-4_2">4</label><br />
+                <input type="checkbox" id="npr-3_1" onChange="calculate()" /> <label for="npr-3_1">3</label><br />
+                <input type="checkbox" id="npr-3_2" onChange="calculate()" /> <label for="npr-3_2">3</label><br />
+                <input type="checkbox" id="npr-2_1" onChange="calculate()" /> <label for="npr-2_1">2</label><br />
+                <input type="checkbox" id="npr-2_2" onChange="calculate()" /> <label for="npr-2_2">2</label>
+            </div>
+            </div>
+        </div>
+
+        <div class="row-company">
+            <h3 class="scr">Silver Crane Lines</h3>
+            <div class="row"><span>Company value:</span> <span class="value" id="scr-value"></span></div>
+            <div class="row"><span>Asset value:</span> <span id="scr-assetvalue"></span></div>
+            <div class="row"><span>Share value:</span> <input type="text" inputmode="numeric" id="scr-sharevalue" min="0" onChange="calculate()" /></div>
+            <div class="row"><span>Cash:</span> <input type="text" inputmode="numeric" id="scr-cash" min="0" onChange="calculate()" /></div>
+            <div class="row"><span>Own shares held:</span> <input type="text" inputmode="numeric" id="scr-ownshares" max="3" min="0" onChange="calculate()" /></div>
+            <div class="row">
+            <div class="shares">Other shares held:<br />
+                <input type="checkbox" id="scr-jnr-share" onChange="calculate()" /> <label class="jnr" for="scr-jnr-share">JNR</label><br />
+                <input type="checkbox" id="scr-npr-share" onChange="calculate()" /> <label class="npr" for="scr-npr-share">NPR</label><br />
+                <input type="checkbox" id="scr-ir-share" onChange="calculate()" /> <label class="ir" for="scr-ir-share">IR</label><br />
+                <input type="checkbox" id="scr-bsr-share" onChange="calculate()" /> <label class="bsr" for="scr-bsr-share">BSR</label><br />
+                <input type="checkbox" id="scr-jur-share" onChange="calculate()" /> <label class="jur" for="scr-jur-share">JUR</label><br />
+                <input type="checkbox" id="scr-jrc-share" onChange="calculate()" /> <label class="jrc" for="scr-jrc-share">JRC</label><br />
+                <input type="checkbox" id="scr-hr-share" onChange="calculate()" /> <label class="hr" for="scr-hr-share">HR</label><br />
+                <input type="checkbox" id="scr-msr-share" onChange="calculate()" /> <label class="msr" for="scr-msr-share">MSR</label><br />
+                <input type="checkbox" id="scr-esr-share" onChange="calculate()" /> <label class="esr" for="scr-esr-share">ESR</label><br />
+                <input type="checkbox" id="scr-sr-share" onChange="calculate()" /> <label class="sr" for="scr-sr-share">SR</label><br />
+                <input type="checkbox" id="scr-cr-share" onChange="calculate()" /> <label class="cr" for="scr-cr-share">CR</label><br />
+                <input type="checkbox" id="scr-cbr-share" onChange="calculate()" /> <label class="cbr" for="scr-cbr-share">CBR</label><br />
+            </div>
+            <div>Trains owned:<br />
+                <input type="checkbox" id="scr-4x3" onChange="calculate()" /> <label for="scr-4x3">4&times;3</label><br />
+                <input type="checkbox" id="scr-3x3" onChange="calculate()" /> <label for="scr-3x3">3&times;3</label><br />
+                <input type="checkbox" id="scr-4x2" onChange="calculate()" /> <label for="scr-4x2">4&times;2</label><br />
+                <input type="checkbox" id="scr-3x2" onChange="calculate()" /> <label for="scr-3x2">3&times;2</label><br />
+                <input type="checkbox" id="scr-4_1" onChange="calculate()" /> <label for="scr-4_1">4</label><br />
+                <input type="checkbox" id="scr-4_2" onChange="calculate()" /> <label for="scr-4_2">4</label><br />
+                <input type="checkbox" id="scr-3_1" onChange="calculate()" /> <label for="scr-3_1">3</label><br />
+                <input type="checkbox" id="scr-3_2" onChange="calculate()" /> <label for="scr-3_2">3</label><br />
+                <input type="checkbox" id="scr-2_1" onChange="calculate()" /> <label for="scr-2_1">2</label><br />
+                <input type="checkbox" id="scr-2_2" onChange="calculate()" /> <label for="scr-2_2">2</label>
+            </div>
+            </div>
+        </div>
+
+        <div class="row-company">
+            <h3 class="ir">Imperial Railways</h3>
+            <div class="row"><span>Company value:</span> <span class="value" id="ir-value"></span></div>
+            <div class="row"><span>Asset value:</span> <span id="ir-assetvalue"></span></div>
+            <div class="row"><span>Share value:</span> <input type="text" inputmode="numeric" id="ir-sharevalue" min="0" onChange="calculate()" /></div>
+            <div class="row"><span>Cash:</span> <input type="text" inputmode="numeric" id="ir-cash" min="0" onChange="calculate()" /></div>
+            <div class="row"><span>Own shares held:</span> <input type="text" inputmode="numeric" id="ir-ownshares" max="3" min="0" onChange="calculate()" /></div>
+            <div class="row">
+            <div class="shares">Other shares held:<br />
+                <input type="checkbox" id="ir-jnr-share" onChange="calculate()" /> <label class="jnr" for="ir-jnr-share">JNR</label><br />
+                <input type="checkbox" id="ir-npr-share" onChange="calculate()" /> <label class="npr" for="ir-npr-share">NPR</label><br />
+                <input type="checkbox" id="ir-scr-share" onChange="calculate()" /> <label class="scr" for="ir-scr-share">SCR</label><br />
+                <input type="checkbox" id="ir-bsr-share" onChange="calculate()" /> <label class="bsr" for="ir-bsr-share">BSR</label><br />
+                <input type="checkbox" id="ir-jur-share" onChange="calculate()" /> <label class="jur" for="ir-jur-share">JUR</label><br />
+                <input type="checkbox" id="ir-jrc-share" onChange="calculate()" /> <label class="jrc" for="ir-jrc-share">JRC</label><br />
+                <input type="checkbox" id="ir-hr-share" onChange="calculate()" /> <label class="hr" for="ir-hr-share">HR</label><br />
+                <input type="checkbox" id="ir-msr-share" onChange="calculate()" /> <label class="msr" for="ir-msr-share">MSR</label><br />
+                <input type="checkbox" id="ir-esr-share" onChange="calculate()" /> <label class="esr" for="ir-esr-share">ESR</label><br />
+                <input type="checkbox" id="ir-sr-share" onChange="calculate()" /> <label class="sr" for="ir-sr-share">SR</label><br />
+                <input type="checkbox" id="ir-cr-share" onChange="calculate()" /> <label class="cr" for="ir-cr-share">CR</label><br />
+                <input type="checkbox" id="ir-cbr-share" onChange="calculate()" /> <label class="cbr" for="ir-cbr-share">CBR</label><br />
+            </div>
+            <div>Trains owned:<br />
+                <input type="checkbox" id="ir-4x3" onChange="calculate()" /> <label for="ir-4x3">4&times;3</label><br />
+                <input type="checkbox" id="ir-3x3" onChange="calculate()" /> <label for="ir-3x3">3&times;3</label><br />
+                <input type="checkbox" id="ir-4x2" onChange="calculate()" /> <label for="ir-4x2">4&times;2</label><br />
+                <input type="checkbox" id="ir-3x2" onChange="calculate()" /> <label for="ir-3x2">3&times;2</label><br />
+                <input type="checkbox" id="ir-4_1" onChange="calculate()" /> <label for="ir-4_1">4</label><br />
+                <input type="checkbox" id="ir-4_2" onChange="calculate()" /> <label for="ir-4_2">4</label><br />
+                <input type="checkbox" id="ir-3_1" onChange="calculate()" /> <label for="ir-3_1">3</label><br />
+                <input type="checkbox" id="ir-3_2" onChange="calculate()" /> <label for="ir-3_2">3</label><br />
+                <input type="checkbox" id="ir-2_1" onChange="calculate()" /> <label for="ir-2_1">2</label><br />
+                <input type="checkbox" id="ir-2_2" onChange="calculate()" /> <label for="ir-2_2">2</label>
+            </div>
+            </div>
+        </div>
+
+        <div class="row-company">
+            <h3 class="bsr">Black Steel Railways</h3>
+            <div class="row"><span>Company value:</span> <span class="value" id="bsr-value"></span></div>
+            <div class="row"><span>Asset value:</span> <span id="bsr-assetvalue"></span></div>
+            <div class="row"><span>Share value:</span> <input type="text" inputmode="numeric" id="bsr-sharevalue" min="0" onChange="calculate()" /></div>
+            <div class="row"><span>Cash:</span> <input type="text" inputmode="numeric" id="bsr-cash" min="0" onChange="calculate()" /></div>
+            <div class="row"><span>Own shares held:</span> <input type="text" inputmode="numeric" id="bsr-ownshares" max="3" min="0" onChange="calculate()" /></div>
+            <div class="row">
+            <div class="shares">Other shares held:<br />
+                <input type="checkbox" id="bsr-jnr-share" onChange="calculate()" /> <label class="jnr" for="bsr-jnr-share">JNR</label><br />
+                <input type="checkbox" id="bsr-npr-share" onChange="calculate()" /> <label class="npr" for="bsr-npr-share">NPR</label><br />
+                <input type="checkbox" id="bsr-scr-share" onChange="calculate()" /> <label class="scr" for="bsr-scr-share">SCR</label><br />
+                <input type="checkbox" id="bsr-ir-share" onChange="calculate()" /> <label class="ir" for="bsr-ir-share">IR</label><br />
+                <input type="checkbox" id="bsr-jur-share" onChange="calculate()" /> <label class="jur" for="bsr-jur-share">JUR</label><br />
+                <input type="checkbox" id="bsr-jrc-share" onChange="calculate()" /> <label class="jrc" for="bsr-jrc-share">JRC</label><br />
+                <input type="checkbox" id="bsr-hr-share" onChange="calculate()" /> <label class="hr" for="bsr-hr-share">HR</label><br />
+                <input type="checkbox" id="bsr-msr-share" onChange="calculate()" /> <label class="msr" for="bsr-msr-share">MSR</label><br />
+                <input type="checkbox" id="bsr-esr-share" onChange="calculate()" /> <label class="esr" for="bsr-esr-share">ESR</label><br />
+                <input type="checkbox" id="bsr-sr-share" onChange="calculate()" /> <label class="sr" for="bsr-sr-share">SR</label><br />
+                <input type="checkbox" id="bsr-cr-share" onChange="calculate()" /> <label class="cr" for="bsr-cr-share">CR</label><br />
+                <input type="checkbox" id="bsr-cbr-share" onChange="calculate()" /> <label class="cbr" for="bsr-cbr-share">CBR</label><br />
+            </div>
+            <div>Trains owned:<br />
+                <input type="checkbox" id="bsr-4x3" onChange="calculate()" /> <label for="bsr-4x3">4&times;3</label><br />
+                <input type="checkbox" id="bsr-3x3" onChange="calculate()" /> <label for="bsr-3x3">3&times;3</label><br />
+                <input type="checkbox" id="bsr-4x2" onChange="calculate()" /> <label for="bsr-4x2">4&times;2</label><br />
+                <input type="checkbox" id="bsr-3x2" onChange="calculate()" /> <label for="bsr-3x2">3&times;2</label><br />
+                <input type="checkbox" id="bsr-4_1" onChange="calculate()" /> <label for="bsr-4_1">4</label><br />
+                <input type="checkbox" id="bsr-4_2" onChange="calculate()" /> <label for="bsr-4_2">4</label><br />
+                <input type="checkbox" id="bsr-3_1" onChange="calculate()" /> <label for="bsr-3_1">3</label><br />
+                <input type="checkbox" id="bsr-3_2" onChange="calculate()" /> <label for="bsr-3_2">3</label><br />
+                <input type="checkbox" id="bsr-2_1" onChange="calculate()" /> <label for="bsr-2_1">2</label><br />
+                <input type="checkbox" id="bsr-2_2" onChange="calculate()" /> <label for="bsr-2_2">2</label>
+            </div>
+            </div>
+        </div>
+
+        <div class="row-company">
+            <h3 class="jur">Japan Unified Rail Consortium</h3>
+            <div class="row"><span>Company value:</span> <span class="value" id="jur-value"></span></div>
+            <div class="row"><span>Asset value:</span> <span id="jur-assetvalue"></span></div>
+            <div class="row"><span>Share value:</span> <input type="text" inputmode="numeric" id="jur-sharevalue" min="0" onChange="calculate()" /></div>
+            <div class="row"><span>Cash:</span> <input type="text" inputmode="numeric" id="jur-cash" min="0" onChange="calculate()" /></div>
+            <div class="row"><span>Own shares held:</span> <input type="text" inputmode="numeric" id="jur-ownshares" max="3" min="0" onChange="calculate()" /></div>
+            <div class="row">
+            <div class="shares">Other shares held:<br />
+                <input type="checkbox" id="jur-jnr-share" onChange="calculate()" /> <label class="jnr" for="jur-jnr-share">JNR</label><br />
+                <input type="checkbox" id="jur-npr-share" onChange="calculate()" /> <label class="npr" for="jur-npr-share">NPR</label><br />
+                <input type="checkbox" id="jur-scr-share" onChange="calculate()" /> <label class="scr" for="jur-scr-share">SCR</label><br />
+                <input type="checkbox" id="jur-ir-share" onChange="calculate()" /> <label class="ir" for="jur-ir-share">IR</label><br />
+                <input type="checkbox" id="jur-bsr-share" onChange="calculate()" /> <label class="bsr" for="jur-bsr-share">BSR</label><br />
+                <input type="checkbox" id="jur-jrc-share" onChange="calculate()" /> <label class="jrc" for="jur-jrc-share">JRC</label><br />
+                <input type="checkbox" id="jur-hr-share" onChange="calculate()" /> <label class="hr" for="jur-hr-share">HR</label><br />
+                <input type="checkbox" id="jur-msr-share" onChange="calculate()" /> <label class="msr" for="jur-msr-share">MSR</label><br />
+                <input type="checkbox" id="jur-esr-share" onChange="calculate()" /> <label class="esr" for="jur-esr-share">ESR</label><br />
+                <input type="checkbox" id="jur-sr-share" onChange="calculate()" /> <label class="sr" for="jur-sr-share">SR</label><br />
+                <input type="checkbox" id="jur-cr-share" onChange="calculate()" /> <label class="cr" for="jur-cr-share">CR</label><br />
+                <input type="checkbox" id="jur-cbr-share" onChange="calculate()" /> <label class="cbr" for="jur-cbr-share">CBR</label><br />
+            </div>
+            <div>Trains owned:<br />
+                <input type="checkbox" id="jur-4x3" onChange="calculate()" /> <label for="jur-4x3">4&times;3</label><br />
+                <input type="checkbox" id="jur-3x3" onChange="calculate()" /> <label for="jur-3x3">3&times;3</label><br />
+                <input type="checkbox" id="jur-4x2" onChange="calculate()" /> <label for="jur-4x2">4&times;2</label><br />
+                <input type="checkbox" id="jur-3x2" onChange="calculate()" /> <label for="jur-3x2">3&times;2</label><br />
+                <input type="checkbox" id="jur-4_1" onChange="calculate()" /> <label for="jur-4_1">4</label><br />
+                <input type="checkbox" id="jur-4_2" onChange="calculate()" /> <label for="jur-4_2">4</label><br />
+                <input type="checkbox" id="jur-3_1" onChange="calculate()" /> <label for="jur-3_1">3</label><br />
+                <input type="checkbox" id="jur-3_2" onChange="calculate()" /> <label for="jur-3_2">3</label><br />
+                <input type="checkbox" id="jur-2_1" onChange="calculate()" /> <label for="jur-2_1">2</label><br />
+                <input type="checkbox" id="jur-2_2" onChange="calculate()" /> <label for="jur-2_2">2</label>
+            </div>
+            </div>
+        </div>
+
+        <div class="row-company">
+            <h3 class="jrc">Japan Railway Company</h3>
+            <div class="row"><span>Company value:</span> <span class="value" id="jrc-value"></span></div>
+            <div class="row"><span>Asset value:</span> <span id="jrc-assetvalue"></span></div>
+            <div class="row"><span>Share value:</span> <input type="text" inputmode="numeric" id="jrc-sharevalue" min="0" onChange="calculate()" /></div>
+            <div class="row"><span>Cash:</span> <input type="text" inputmode="numeric" id="jrc-cash" min="0" onChange="calculate()" /></div>
+            <div class="row"><span>Own shares held:</span> <input type="text" inputmode="numeric" id="jrc-ownshares" max="3" min="0" onChange="calculate()" /></div>
+            <div class="row">
+            <div class="shares">Other shares held:<br />
+                <input type="checkbox" id="jrc-jnr-share" onChange="calculate()" /> <label class="jnr" for="jrc-jnr-share">JNR</label><br />
+                <input type="checkbox" id="jrc-npr-share" onChange="calculate()" /> <label class="npr" for="jrc-npr-share">NPR</label><br />
+                <input type="checkbox" id="jrc-scr-share" onChange="calculate()" /> <label class="scr" for="jrc-scr-share">SCR</label><br />
+                <input type="checkbox" id="jrc-ir-share" onChange="calculate()" /> <label class="ir" for="jrc-ir-share">IR</label><br />
+                <input type="checkbox" id="jrc-bsr-share" onChange="calculate()" /> <label class="bsr" for="jrc-bsr-share">BSR</label><br />
+                <input type="checkbox" id="jrc-jur-share" onChange="calculate()" /> <label class="jur" for="jrc-jur-share">JUR</label><br />
+                <input type="checkbox" id="jrc-hr-share" onChange="calculate()" /> <label class="hr" for="jrc-hr-share">HR</label><br />
+                <input type="checkbox" id="jrc-msr-share" onChange="calculate()" /> <label class="msr" for="jrc-msr-share">MSR</label><br />
+                <input type="checkbox" id="jrc-esr-share" onChange="calculate()" /> <label class="esr" for="jrc-esr-share">ESR</label><br />
+                <input type="checkbox" id="jrc-sr-share" onChange="calculate()" /> <label class="sr" for="jrc-sr-share">SR</label><br />
+                <input type="checkbox" id="jrc-cr-share" onChange="calculate()" /> <label class="cr" for="jrc-cr-share">CR</label><br />
+                <input type="checkbox" id="jrc-cbr-share" onChange="calculate()" /> <label class="cbr" for="jrc-cbr-share">CBR</label><br />
+            </div>
+            <div>Trains owned:<br />
+                <input type="checkbox" id="jrc-4x3" onChange="calculate()" /> <label for="jrc-4x3">4&times;3</label><br />
+                <input type="checkbox" id="jrc-3x3" onChange="calculate()" /> <label for="jrc-3x3">3&times;3</label><br />
+                <input type="checkbox" id="jrc-4x2" onChange="calculate()" /> <label for="jrc-4x2">4&times;2</label><br />
+                <input type="checkbox" id="jrc-3x2" onChange="calculate()" /> <label for="jrc-3x2">3&times;2</label><br />
+                <input type="checkbox" id="jrc-4_1" onChange="calculate()" /> <label for="jrc-4_1">4</label><br />
+                <input type="checkbox" id="jrc-4_2" onChange="calculate()" /> <label for="jrc-4_2">4</label><br />
+                <input type="checkbox" id="jrc-3_1" onChange="calculate()" /> <label for="jrc-3_1">3</label><br />
+                <input type="checkbox" id="jrc-3_2" onChange="calculate()" /> <label for="jrc-3_2">3</label><br />
+                <input type="checkbox" id="jrc-2_1" onChange="calculate()" /> <label for="jrc-2_1">2</label><br />
+                <input type="checkbox" id="jrc-2_2" onChange="calculate()" /> <label for="jrc-2_2">2</label>
+            </div>
+            </div>
+        </div>
+
+        <div class="row-company">
+            <h3 class="hr">Hokkaido Railways</h3>
+            <div class="row"><span>Company value:</span> <span class="value" id="hr-value"></span></div>
+            <div class="row"><span>Asset value:</span> <span id="hr-assetvalue"></span></div>
+            <div class="row"><span>Share value:</span> <input type="text" inputmode="numeric" id="hr-sharevalue" min="0" onChange="calculate()" /></div>
+            <div class="row"><span>Cash:</span> <input type="text" inputmode="numeric" id="hr-cash" min="0" onChange="calculate()" /></div>
+            <div class="row"><span>Own shares held:</span> <input type="text" inputmode="numeric" id="hr-ownshares" max="3" min="0" onChange="calculate()" /></div>
+            <div class="row">
+            <div class="shares">Other shares held:<br />
+                <input type="checkbox" id="hr-jnr-share" onChange="calculate()" /> <label class="jnr" for="hr-jnr-share">JNR</label><br />
+                <input type="checkbox" id="hr-npr-share" onChange="calculate()" /> <label class="npr" for="hr-npr-share">NPR</label><br />
+                <input type="checkbox" id="hr-scr-share" onChange="calculate()" /> <label class="scr" for="hr-scr-share">SCR</label><br />
+                <input type="checkbox" id="hr-ir-share" onChange="calculate()" /> <label class="ir" for="hr-ir-share">IR</label><br />
+                <input type="checkbox" id="hr-bsr-share" onChange="calculate()" /> <label class="bsr" for="hr-bsr-share">BSR</label><br />
+                <input type="checkbox" id="hr-jur-share" onChange="calculate()" /> <label class="jur" for="hr-jur-share">JUR</label><br />
+                <input type="checkbox" id="hr-jrc-share" onChange="calculate()" /> <label class="jrc" for="hr-jrc-share">JRC</label><br />
+                <input type="checkbox" id="hr-msr-share" onChange="calculate()" /> <label class="msr" for="hr-msr-share">MSR</label><br />
+                <input type="checkbox" id="hr-esr-share" onChange="calculate()" /> <label class="esr" for="hr-esr-share">ESR</label><br />
+                <input type="checkbox" id="hr-sr-share" onChange="calculate()" /> <label class="sr" for="hr-sr-share">SR</label><br />
+                <input type="checkbox" id="hr-cr-share" onChange="calculate()" /> <label class="cr" for="hr-cr-share">CR</label><br />
+                <input type="checkbox" id="hr-cbr-share" onChange="calculate()" /> <label class="cbr" for="hr-cbr-share">CBR</label><br />
+            </div>
+            <div>Trains owned:<br />
+                <input type="checkbox" id="hr-4x3" onChange="calculate()" /> <label for="hr-4x3">4&times;3</label><br />
+                <input type="checkbox" id="hr-3x3" onChange="calculate()" /> <label for="hr-3x3">3&times;3</label><br />
+                <input type="checkbox" id="hr-4x2" onChange="calculate()" /> <label for="hr-4x2">4&times;2</label><br />
+                <input type="checkbox" id="hr-3x2" onChange="calculate()" /> <label for="hr-3x2">3&times;2</label><br />
+                <input type="checkbox" id="hr-4_1" onChange="calculate()" /> <label for="hr-4_1">4</label><br />
+                <input type="checkbox" id="hr-4_2" onChange="calculate()" /> <label for="hr-4_2">4</label><br />
+                <input type="checkbox" id="hr-3_1" onChange="calculate()" /> <label for="hr-3_1">3</label><br />
+                <input type="checkbox" id="hr-3_2" onChange="calculate()" /> <label for="hr-3_2">3</label><br />
+                <input type="checkbox" id="hr-2_1" onChange="calculate()" /> <label for="hr-2_1">2</label><br />
+                <input type="checkbox" id="hr-2_2" onChange="calculate()" /> <label for="hr-2_2">2</label>
+            </div>
+            </div>
+        </div>
+
+        <div class="row-company">
+            <h3 class="msr">Mountain Sun Railway</h3>
+            <div class="row"><span>Company value:</span> <span class="value" id="msr-value"></span></div>
+            <div class="row"><span>Asset value:</span> <span id="msr-assetvalue"></span></div>
+            <div class="row"><span>Share value:</span> <input type="text" inputmode="numeric" id="msr-sharevalue" min="0" onChange="calculate()" /></div>
+            <div class="row"><span>Cash:</span> <input type="text" inputmode="numeric" id="msr-cash" min="0" onChange="calculate()" /></div>
+            <div class="row"><span>Own shares held:</span> <input type="text" inputmode="numeric" id="msr-ownshares" max="3" min="0" onChange="calculate()" /></div>
+            <div class="row">
+            <div class="shares">Other shares held:<br />
+                <input type="checkbox" id="msr-jnr-share" onChange="calculate()" /> <label class="jnr" for="msr-jnr-share">JNR</label><br />
+                <input type="checkbox" id="msr-npr-share" onChange="calculate()" /> <label class="npr" for="msr-npr-share">NPR</label><br />
+                <input type="checkbox" id="msr-scr-share" onChange="calculate()" /> <label class="scr" for="msr-scr-share">SCR</label><br />
+                <input type="checkbox" id="msr-ir-share" onChange="calculate()" /> <label class="ir" for="msr-ir-share">IR</label><br />
+                <input type="checkbox" id="msr-bsr-share" onChange="calculate()" /> <label class="bsr" for="msr-bsr-share">BSR</label><br />
+                <input type="checkbox" id="msr-jur-share" onChange="calculate()" /> <label class="jur" for="msr-jur-share">JUR</label><br />
+                <input type="checkbox" id="msr-jrc-share" onChange="calculate()" /> <label class="jrc" for="msr-jrc-share">JRC</label><br />
+                <input type="checkbox" id="msr-hr-share" onChange="calculate()" /> <label class="hr" for="msr-hr-share">HR</label><br />
+                <input type="checkbox" id="msr-esr-share" onChange="calculate()" /> <label class="esr" for="msr-esr-share">ESR</label><br />
+                <input type="checkbox" id="msr-sr-share" onChange="calculate()" /> <label class="sr" for="msr-sr-share">SR</label><br />
+                <input type="checkbox" id="msr-cr-share" onChange="calculate()" /> <label class="cr" for="msr-cr-share">CR</label><br />
+                <input type="checkbox" id="msr-cbr-share" onChange="calculate()" /> <label class="cbr" for="msr-cbr-share">CBR</label><br />
+            </div>
+            <div>Trains owned:<br />
+                <input type="checkbox" id="msr-4x3" onChange="calculate()" /> <label for="msr-4x3">4&times;3</label><br />
+                <input type="checkbox" id="msr-3x3" onChange="calculate()" /> <label for="msr-3x3">3&times;3</label><br />
+                <input type="checkbox" id="msr-4x2" onChange="calculate()" /> <label for="msr-4x2">4&times;2</label><br />
+                <input type="checkbox" id="msr-3x2" onChange="calculate()" /> <label for="msr-3x2">3&times;2</label><br />
+                <input type="checkbox" id="msr-4_1" onChange="calculate()" /> <label for="msr-4_1">4</label><br />
+                <input type="checkbox" id="msr-4_2" onChange="calculate()" /> <label for="msr-4_2">4</label><br />
+                <input type="checkbox" id="msr-3_1" onChange="calculate()" /> <label for="msr-3_1">3</label><br />
+                <input type="checkbox" id="msr-3_2" onChange="calculate()" /> <label for="msr-3_2">3</label><br />
+                <input type="checkbox" id="msr-2_1" onChange="calculate()" /> <label for="msr-2_1">2</label><br />
+                <input type="checkbox" id="msr-2_2" onChange="calculate()" /> <label for="msr-2_2">2</label>
+            </div>
+            </div>
+        </div>
+
+        <div class="row-company">
+            <h3 class="esr">Eastern Sea Railway</h3>
+            <div class="row"><span>Company value:</span> <span class="value" id="esr-value"></span></div>
+            <div class="row"><span>Asset value:</span> <span id="esr-assetvalue"></span></div>
+            <div class="row"><span>Share value:</span> <input type="text" inputmode="numeric" id="esr-sharevalue" min="0" onChange="calculate()" /></div>
+            <div class="row"><span>Cash:</span> <input type="text" inputmode="numeric" id="esr-cash" min="0" onChange="calculate()" /></div>
+            <div class="row"><span>Own shares held:</span> <input type="text" inputmode="numeric" id="esr-ownshares" max="3" min="0" onChange="calculate()" /></div>
+            <div class="row">
+            <div class="shares">Other shares held:<br />
+                <input type="checkbox" id="esr-jnr-share" onChange="calculate()" /> <label class="jnr" for="esr-jnr-share">JNR</label><br />
+                <input type="checkbox" id="esr-npr-share" onChange="calculate()" /> <label class="npr" for="esr-npr-share">NPR</label><br />
+                <input type="checkbox" id="esr-scr-share" onChange="calculate()" /> <label class="scr" for="esr-scr-share">SCR</label><br />
+                <input type="checkbox" id="esr-ir-share" onChange="calculate()" /> <label class="ir" for="esr-ir-share">IR</label><br />
+                <input type="checkbox" id="esr-bsr-share" onChange="calculate()" /> <label class="bsr" for="esr-bsr-share">BSR</label><br />
+                <input type="checkbox" id="esr-jur-share" onChange="calculate()" /> <label class="jur" for="esr-jur-share">JUR</label><br />
+                <input type="checkbox" id="esr-jrc-share" onChange="calculate()" /> <label class="jrc" for="esr-jrc-share">JRC</label><br />
+                <input type="checkbox" id="esr-hr-share" onChange="calculate()" /> <label class="hr" for="esr-hr-share">HR</label><br />
+                <input type="checkbox" id="esr-msr-share" onChange="calculate()" /> <label class="msr" for="esr-msr-share">MSR</label><br />
+                <input type="checkbox" id="esr-sr-share" onChange="calculate()" /> <label class="sr" for="esr-sr-share">SR</label><br />
+                <input type="checkbox" id="esr-cr-share" onChange="calculate()" /> <label class="cr" for="esr-cr-share">CR</label><br />
+                <input type="checkbox" id="esr-cbr-share" onChange="calculate()" /> <label class="cbr" for="esr-cbr-share">CBR</label><br />
+            </div>
+            <div>Trains owned:<br />
+                <input type="checkbox" id="esr-4x3" onChange="calculate()" /> <label for="esr-4x3">4&times;3</label><br />
+                <input type="checkbox" id="esr-3x3" onChange="calculate()" /> <label for="esr-3x3">3&times;3</label><br />
+                <input type="checkbox" id="esr-4x2" onChange="calculate()" /> <label for="esr-4x2">4&times;2</label><br />
+                <input type="checkbox" id="esr-3x2" onChange="calculate()" /> <label for="esr-3x2">3&times;2</label><br />
+                <input type="checkbox" id="esr-4_1" onChange="calculate()" /> <label for="esr-4_1">4</label><br />
+                <input type="checkbox" id="esr-4_2" onChange="calculate()" /> <label for="esr-4_2">4</label><br />
+                <input type="checkbox" id="esr-3_1" onChange="calculate()" /> <label for="esr-3_1">3</label><br />
+                <input type="checkbox" id="esr-3_2" onChange="calculate()" /> <label for="esr-3_2">3</label><br />
+                <input type="checkbox" id="esr-2_1" onChange="calculate()" /> <label for="esr-2_1">2</label><br />
+                <input type="checkbox" id="esr-2_2" onChange="calculate()" /> <label for="esr-2_2">2</label>
+            </div>
+            </div>
+        </div>
+
+        <div class="row-company">
+            <h3 class="sr">Shikoku Railroad</h3>
+            <div class="row"><span>Company value:</span> <span class="value" id="sr-value"></span></div>
+            <div class="row"><span>Asset value:</span> <span id="sr-assetvalue"></span></div>
+            <div class="row"><span>Share value:</span> <input type="text" inputmode="numeric" id="sr-sharevalue" min="0" onChange="calculate()" /></div>
+            <div class="row"><span>Cash:</span> <input type="text" inputmode="numeric" id="sr-cash" min="0" onChange="calculate()" /></div>
+            <div class="row"><span>Own shares held:</span> <input type="text" inputmode="numeric" id="sr-ownshares" max="3" min="0" onChange="calculate()" /></div>
+            <div class="row">
+            <div class="shares">Other shares held:<br />
+                <input type="checkbox" id="sr-jnr-share" onChange="calculate()" /> <label class="jnr" for="sr-jnr-share">JNR</label><br />
+                <input type="checkbox" id="sr-npr-share" onChange="calculate()" /> <label class="npr" for="sr-npr-share">NPR</label><br />
+                <input type="checkbox" id="sr-scr-share" onChange="calculate()" /> <label class="scr" for="sr-scr-share">SCR</label><br />
+                <input type="checkbox" id="sr-ir-share" onChange="calculate()" /> <label class="ir" for="sr-ir-share">IR</label><br />
+                <input type="checkbox" id="sr-bsr-share" onChange="calculate()" /> <label class="bsr" for="sr-bsr-share">BSR</label><br />
+                <input type="checkbox" id="sr-jur-share" onChange="calculate()" /> <label class="jur" for="sr-jur-share">JUR</label><br />
+                <input type="checkbox" id="sr-jrc-share" onChange="calculate()" /> <label class="jrc" for="sr-jrc-share">JRC</label><br />
+                <input type="checkbox" id="sr-hr-share" onChange="calculate()" /> <label class="hr" for="sr-hr-share">HR</label><br />
+                <input type="checkbox" id="sr-msr-share" onChange="calculate()" /> <label class="msr" for="sr-msr-share">MSR</label><br />
+                <input type="checkbox" id="sr-esr-share" onChange="calculate()" /> <label class="esr" for="sr-esr-share">ESR</label><br />
+                <input type="checkbox" id="sr-cr-share" onChange="calculate()" /> <label class="cr" for="sr-cr-share">CR</label><br />
+                <input type="checkbox" id="sr-cbr-share" onChange="calculate()" /> <label class="cbr" for="sr-cbr-share">CBR</label><br />
+            </div>
+            <div>Trains owned:<br />
+                <input type="checkbox" id="sr-4x3" onChange="calculate()" /> <label for="sr-4x3">4&times;3</label><br />
+                <input type="checkbox" id="sr-3x3" onChange="calculate()" /> <label for="sr-3x3">3&times;3</label><br />
+                <input type="checkbox" id="sr-4x2" onChange="calculate()" /> <label for="sr-4x2">4&times;2</label><br />
+                <input type="checkbox" id="sr-3x2" onChange="calculate()" /> <label for="sr-3x2">3&times;2</label><br />
+                <input type="checkbox" id="sr-4_1" onChange="calculate()" /> <label for="sr-4_1">4</label><br />
+                <input type="checkbox" id="sr-4_2" onChange="calculate()" /> <label for="sr-4_2">4</label><br />
+                <input type="checkbox" id="sr-3_1" onChange="calculate()" /> <label for="sr-3_1">3</label><br />
+                <input type="checkbox" id="sr-3_2" onChange="calculate()" /> <label for="sr-3_2">3</label><br />
+                <input type="checkbox" id="sr-2_1" onChange="calculate()" /> <label for="sr-2_1">2</label><br />
+                <input type="checkbox" id="sr-2_2" onChange="calculate()" /> <label for="sr-2_2">2</label>
+            </div>
+            </div>
+        </div>
+
+        <div class="row-company">
+            <h3 class="cr">Chrysanthemum Railroad</h3>
+            <div class="row"><span>Company value:</span> <span class="value" id="cr-value"></span></div>
+            <div class="row"><span>Asset value:</span> <span id="cr-assetvalue"></span></div>
+            <div class="row"><span>Share value:</span> <input type="text" inputmode="numeric" id="cr-sharevalue" min="0" onChange="calculate()" /></div>
+            <div class="row"><span>Cash:</span> <input type="text" inputmode="numeric" id="cr-cash" min="0" onChange="calculate()" /></div>
+            <div class="row"><span>Own shares held:</span> <input type="text" inputmode="numeric" id="cr-ownshares" max="3" min="0" onChange="calculate()" /></div>
+            <div class="row">
+            <div class="shares">Other shares held:<br />
+                <input type="checkbox" id="cr-jnr-share" onChange="calculate()" /> <label class="jnr" for="cr-jnr-share">JNR</label><br />
+                <input type="checkbox" id="cr-npr-share" onChange="calculate()" /> <label class="npr" for="cr-npr-share">NPR</label><br />
+                <input type="checkbox" id="cr-scr-share" onChange="calculate()" /> <label class="scr" for="cr-scr-share">SCR</label><br />
+                <input type="checkbox" id="cr-ir-share" onChange="calculate()" /> <label class="ir" for="cr-ir-share">IR</label><br />
+                <input type="checkbox" id="cr-bsr-share" onChange="calculate()" /> <label class="bsr" for="cr-bsr-share">BSR</label><br />
+                <input type="checkbox" id="cr-jur-share" onChange="calculate()" /> <label class="jur" for="cr-jur-share">JUR</label><br />
+                <input type="checkbox" id="cr-jrc-share" onChange="calculate()" /> <label class="jrc" for="cr-jrc-share">JRC</label><br />
+                <input type="checkbox" id="cr-hr-share" onChange="calculate()" /> <label class="hr" for="cr-hr-share">HR</label><br />
+                <input type="checkbox" id="cr-msr-share" onChange="calculate()" /> <label class="msr" for="cr-msr-share">MSR</label><br />
+                <input type="checkbox" id="cr-esr-share" onChange="calculate()" /> <label class="esr" for="cr-esr-share">ESR</label><br />
+                <input type="checkbox" id="cr-sr-share" onChange="calculate()" /> <label class="sr" for="cr-sr-share">SR</label><br />
+                <input type="checkbox" id="cr-cbr-share" onChange="calculate()" /> <label class="cbr" for="cr-cbr-share">CBR</label><br />
+            </div>
+            <div>Trains owned:<br />
+                <input type="checkbox" id="cr-4x3" onChange="calculate()" /> <label for="cr-4x3">4&times;3</label><br />
+                <input type="checkbox" id="cr-3x3" onChange="calculate()" /> <label for="cr-3x3">3&times;3</label><br />
+                <input type="checkbox" id="cr-4x2" onChange="calculate()" /> <label for="cr-4x2">4&times;2</label><br />
+                <input type="checkbox" id="cr-3x2" onChange="calculate()" /> <label for="cr-3x2">3&times;2</label><br />
+                <input type="checkbox" id="cr-4_1" onChange="calculate()" /> <label for="cr-4_1">4</label><br />
+                <input type="checkbox" id="cr-4_2" onChange="calculate()" /> <label for="cr-4_2">4</label><br />
+                <input type="checkbox" id="cr-3_1" onChange="calculate()" /> <label for="cr-3_1">3</label><br />
+                <input type="checkbox" id="cr-3_2" onChange="calculate()" /> <label for="cr-3_2">3</label><br />
+                <input type="checkbox" id="cr-2_1" onChange="calculate()" /> <label for="cr-2_1">2</label><br />
+                <input type="checkbox" id="cr-2_2" onChange="calculate()" /> <label for="cr-2_2">2</label>
+            </div>
+            </div>
+        </div>
+
+        <div class="row-company">
+            <h3 class="cbr">Cherry Blossom Railroad</h3>
+            <div class="row"><span>Company value:</span> <span class="value" id="cbr-value"></span></div>
+            <div class="row"><span>Asset value:</span> <span id="cbr-assetvalue"></span></div>
+            <div class="row"><span>Share value:</span> <input type="text" inputmode="numeric" id="cbr-sharevalue" min="0" onChange="calculate()" /></div>
+            <div class="row"><span>Cash:</span> <input type="text" inputmode="numeric" id="cbr-cash" min="0" onChange="calculate()" /></div>
+            <div class="row"><span>Own shares held:</span> <input type="text" inputmode="numeric" id="cbr-ownshares" max="3" min="0" onChange="calculate()" /></div>
+            <div class="row">
+            <div class="shares">Other shares held:<br />
+                <input type="checkbox" id="cbr-jnr-share" onChange="calculate()" /> <label class="jnr" for="cbr-jnr-share">JNR</label><br />
+                <input type="checkbox" id="cbr-npr-share" onChange="calculate()" /> <label class="npr" for="cbr-npr-share">NPR</label><br />
+                <input type="checkbox" id="cbr-scr-share" onChange="calculate()" /> <label class="scr" for="cbr-scr-share">SCR</label><br />
+                <input type="checkbox" id="cbr-ir-share" onChange="calculate()" /> <label class="ir" for="cbr-ir-share">IR</label><br />
+                <input type="checkbox" id="cbr-bsr-share" onChange="calculate()" /> <label class="bsr" for="cbr-bsr-share">BSR</label><br />
+                <input type="checkbox" id="cbr-jur-share" onChange="calculate()" /> <label class="jur" for="cbr-jur-share">JUR</label><br />
+                <input type="checkbox" id="cbr-jrc-share" onChange="calculate()" /> <label class="jrc" for="cbr-jrc-share">JRC</label><br />
+                <input type="checkbox" id="cbr-hr-share" onChange="calculate()" /> <label class="hr" for="cbr-hr-share">HR</label><br />
+                <input type="checkbox" id="cbr-msr-share" onChange="calculate()" /> <label class="msr" for="cbr-msr-share">MSR</label><br />
+                <input type="checkbox" id="cbr-esr-share" onChange="calculate()" /> <label class="esr" for="cbr-esr-share">ESR</label><br />
+                <input type="checkbox" id="cbr-sr-share" onChange="calculate()" /> <label class="sr" for="cbr-sr-share">SR</label><br />
+                <input type="checkbox" id="cbr-cr-share" onChange="calculate()" /> <label class="cr" for="cbr-cr-share">CR</label><br />
+            </div>
+            <div>Trains owned:<br />
+                <input type="checkbox" id="cbr-4x3" onChange="calculate()" /> <label for="cbr-4x3">4&times;3</label><br />
+                <input type="checkbox" id="cbr-3x3" onChange="calculate()" /> <label for="cbr-3x3">3&times;3</label><br />
+                <input type="checkbox" id="cbr-4x2" onChange="calculate()" /> <label for="cbr-4x2">4&times;2</label><br />
+                <input type="checkbox" id="cbr-3x2" onChange="calculate()" /> <label for="cbr-3x2">3&times;2</label><br />
+                <input type="checkbox" id="cbr-4_1" onChange="calculate()" /> <label for="cbr-4_1">4</label><br />
+                <input type="checkbox" id="cbr-4_2" onChange="calculate()" /> <label for="cbr-4_2">4</label><br />
+                <input type="checkbox" id="cbr-3_1" onChange="calculate()" /> <label for="cbr-3_1">3</label><br />
+                <input type="checkbox" id="cbr-3_2" onChange="calculate()" /> <label for="cbr-3_2">3</label><br />
+                <input type="checkbox" id="cbr-2_1" onChange="calculate()" /> <label for="cbr-2_1">2</label><br />
+                <input type="checkbox" id="cbr-2_2" onChange="calculate()" /> <label for="cbr-2_2">2</label>
+            </div>
+            </div>
+        </div>
+
+        <h2>Company value summary</h2>
+
+        <div id="companysummary">
+            <div class="row" id="jnr-summary"><span class="company jnr">JNR</span> <span class="value jnr-light" id="jnr-summaryvalue"></span></div>
+            <div class="row" id="npr-summary"><span class="company npr">NPR</span> <span class="value npr-light" id="npr-summaryvalue"></span></div>
+            <div class="row" id="scr-summary"><span class="company scr">SCR</span> <span class="value scr-light" id="scr-summaryvalue"></span></div>
+            <div class="row" id="ir-summary"><span class="company ir">IR</span> <span class="value ir-light" id="ir-summaryvalue"></span></div>
+            <div class="row" id="bsr-summary"><span class="company bsr">BSR</span> <span class="value bsr-light" id="bsr-summaryvalue"></span></div>
+            <div class="row" id="jur-summary"><span class="company jur">JUR</span> <span class="value jur-light" id="jur-summaryvalue"></span></div>
+            <div class="row" id="jrc-summary"><span class="company jrc">JRC</span> <span class="value jrc-light" id="jrc-summaryvalue"></span></div>
+            <div class="row" id="hr-summary"><span class="company hr">HR</span> <span class="value hr-light" id="hr-summaryvalue"></span></div>
+            <div class="row" id="msr-summary"><span class="company msr">MSR</span> <span class="value msr-light" id="msr-summaryvalue"></span></div>
+            <div class="row" id="esr-summary"><span class="company esr">ESR</span> <span class="value esr-light" id="esr-summaryvalue"></span></div>
+            <div class="row" id="sr-summary"><span class="company sr">SR</span> <span class="value sr-light" id="sr-summaryvalue"></span></div>
+            <div class="row" id="cr-summary"><span class="company cr">CR</span> <span class="value cr-light" id="cr-summaryvalue"></span></div>
+            <div class="row" id="cbr-summary"><span class="company cbr">CBR</span> <span class="value cbr-light" id="cbr-summaryvalue"></span></div>
+        </div>
+
+        <h2>Players</h2>
+
+        <div class="row-player">
+            <h3>Player 1: <span id="player1-heading"></span></h3>
+            <div class="row"><label for="player1-name">Name: </label> <input onChange="updatePlayers()" type="text" id="player1-name" /></div>
+            <div class="row"><label for="player1-cash">Cash: </label> <input class="cash" onChange="updatePlayers()" type="text" inputmode="numeric" min="0" id="player1-cash" /></div>
+            <div class="row">Shares held:</div>
+            <div class="shares">
+                <div class="row jnr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player1-jnr" onChange="updatePlayers()" /> <label class="jnr" for="player1-jnr">JNR</label> <span class="sharevalue jnr-light" id="player1-jnr-value"></span></div>
+                <div class="row npr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player1-npr" onChange="updatePlayers()" /> <label class="npr" for="player1-npr">NPR</label> <span class="sharevalue npr-light" id="player1-npr-value"></span></div>
+                <div class="row scr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player1-scr" onChange="updatePlayers()" /> <label class="scr" for="player1-scr">SCR</label> <span class="sharevalue scr-light" id="player1-scr-value"></span></div>
+                <div class="row ir-share"><input type="text" inputmode="numeric" min="0" max="10" id="player1-ir" onChange="updatePlayers()" /> <label class="ir" for="player1-ir">IR</label> <span class="sharevalue ir-light" id="player1-ir-value"></span></div>
+                <div class="row bsr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player1-bsr" onChange="updatePlayers()" /> <label class="bsr" for="player1-bsr">BSR</label> <span class="sharevalue bsr-light" id="player1-bsr-value"></span></div>
+                <div class="row jur-share"><input type="text" inputmode="numeric" min="0" max="10" id="player1-jur" onChange="updatePlayers()" /> <label class="jur" for="player1-jur">JUR</label> <span class="sharevalue jur-light" id="player1-jur-value"></span></div>
+                <div class="row jrc-share"><input type="text" inputmode="numeric" min="0" max="10" id="player1-jrc" onChange="updatePlayers()" /> <label class="jrc" for="player1-jrc">JRC</label> <span class="sharevalue jrc-light" id="player1-jrc-value"></span></div>
+                <div class="row hr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player1-hr" onChange="updatePlayers()" /> <label class="hr" for="player1-hr">HR</label> <span class="sharevalue hr-light" id="player1-hr-value"></span></div>
+                <div class="row msr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player1-msr" onChange="updatePlayers()" /> <label class="msr" for="player1-msr">MSR</label> <span class="sharevalue msr-light" id="player1-msr-value"></span></div>
+                <div class="row esr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player1-esr" onChange="updatePlayers()" /> <label class="esr" for="player1-esr">ESR</label> <span class="sharevalue esr-light" id="player1-esr-value"></span></div>
+                <div class="row sr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player1-sr" onChange="updatePlayers()" /> <label class="sr" for="player1-sr">SR</label> <span class="sharevalue sr-light" id="player1-sr-value"></span></div>
+                <div class="row cr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player1-cr" onChange="updatePlayers()" /> <label class="cr" for="player1-cr">CR</label> <span class="sharevalue cr-light" id="player1-cr-value"></span></div>
+                <div class="row cbr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player1-cbr" onChange="updatePlayers()" /> <label class="cbr" for="player1-cbr">CBR</label> <span class="sharevalue cbr-light" id="player1-cbr-value"></span></div>
+            </div>
+        </div>
+
+        <div class="row-player">
+            <h3>Player 2: <span id="player2-heading"></span></h3>
+            <div class="row"><label for="player2-name">Name: </label> <input onChange="updatePlayers()" type="text" id="player2-name" /></div>
+            <div class="row"><label for="player2-cash">Cash: </label> <input class="cash" onChange="updatePlayers()" type="text" inputmode="numeric" min="0" id="player2-cash" /></div>
+            <div class="row">Shares held:</div>
+            <div class="shares">
+                <div class="row jnr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player2-jnr" onChange="updatePlayers()" /> <label class="jnr" for="player2-jnr">JNR</label> <span class="sharevalue jnr-light" id="player2-jnr-value"></span></div>
+                <div class="row npr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player2-npr" onChange="updatePlayers()" /> <label class="npr" for="player2-npr">NPR</label> <span class="sharevalue npr-light" id="player2-npr-value"></span></div>
+                <div class="row scr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player2-scr" onChange="updatePlayers()" /> <label class="scr" for="player2-scr">SCR</label> <span class="sharevalue scr-light" id="player2-scr-value"></span></div>
+                <div class="row ir-share"><input type="text" inputmode="numeric" min="0" max="10" id="player2-ir" onChange="updatePlayers()" /> <label class="ir" for="player2-ir">IR</label> <span class="sharevalue ir-light" id="player2-ir-value"></span></div>
+                <div class="row bsr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player2-bsr" onChange="updatePlayers()" /> <label class="bsr" for="player2-bsr">BSR</label> <span class="sharevalue bsr-light" id="player2-bsr-value"></span></div>
+                <div class="row jur-share"><input type="text" inputmode="numeric" min="0" max="10" id="player2-jur" onChange="updatePlayers()" /> <label class="jur" for="player2-jur">JUR</label> <span class="sharevalue jur-light" id="player2-jur-value"></span></div>
+                <div class="row jrc-share"><input type="text" inputmode="numeric" min="0" max="10" id="player2-jrc" onChange="updatePlayers()" /> <label class="jrc" for="player2-jrc">JRC</label> <span class="sharevalue jrc-light" id="player2-jrc-value"></span></div>
+                <div class="row hr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player2-hr" onChange="updatePlayers()" /> <label class="hr" for="player2-hr">HR</label> <span class="sharevalue hr-light" id="player2-hr-value"></span></div>
+                <div class="row msr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player2-msr" onChange="updatePlayers()" /> <label class="msr" for="player2-msr">MSR</label> <span class="sharevalue msr-light" id="player2-msr-value"></span></div>
+                <div class="row esr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player2-esr" onChange="updatePlayers()" /> <label class="esr" for="player2-esr">ESR</label> <span class="sharevalue esr-light" id="player2-esr-value"></span></div>
+                <div class="row sr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player2-sr" onChange="updatePlayers()" /> <label class="sr" for="player2-sr">SR</label> <span class="sharevalue sr-light" id="player2-sr-value"></span></div>
+                <div class="row cr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player2-cr" onChange="updatePlayers()" /> <label class="cr" for="player2-cr">CR</label> <span class="sharevalue cr-light" id="player2-cr-value"></span></div>
+                <div class="row cbr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player2-cbr" onChange="updatePlayers()" /> <label class="cbr" for="player2-cbr">CBR</label> <span class="sharevalue cbr-light" id="player2-cbr-value"></span></div>
+            </div>
+        </div>
+
+        <div class="row-player">
+            <h3>Player 3: <span id="player3-heading"></span></h3>
+            <div class="row"><label for="player3-name">Name: </label> <input onChange="updatePlayers()" type="text" id="player3-name" /></div>
+            <div class="row"><label for="player3-cash">Cash: </label> <input class="cash" onChange="updatePlayers()" type="text" inputmode="numeric" min="0" id="player3-cash" /></div>
+            <div class="row">Shares held:</div>
+            <div class="shares">
+                <div class="row jnr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player3-jnr" onChange="updatePlayers()" /> <label class="jnr" for="player3-jnr">JNR</label> <span class="sharevalue jnr-light" id="player3-jnr-value"></span></div>
+                <div class="row npr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player3-npr" onChange="updatePlayers()" /> <label class="npr" for="player3-npr">NPR</label> <span class="sharevalue npr-light" id="player3-npr-value"></span></div>
+                <div class="row scr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player3-scr" onChange="updatePlayers()" /> <label class="scr" for="player3-scr">SCR</label> <span class="sharevalue scr-light" id="player3-scr-value"></span></div>
+                <div class="row ir-share"><input type="text" inputmode="numeric" min="0" max="10" id="player3-ir" onChange="updatePlayers()" /> <label class="ir" for="player3-ir">IR</label> <span class="sharevalue ir-light" id="player3-ir-value"></span></div>
+                <div class="row bsr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player3-bsr" onChange="updatePlayers()" /> <label class="bsr" for="player3-bsr">BSR</label> <span class="sharevalue bsr-light" id="player3-bsr-value"></span></div>
+                <div class="row jur-share"><input type="text" inputmode="numeric" min="0" max="10" id="player3-jur" onChange="updatePlayers()" /> <label class="jur" for="player3-jur">JUR</label> <span class="sharevalue jur-light" id="player3-jur-value"></span></div>
+                <div class="row jrc-share"><input type="text" inputmode="numeric" min="0" max="10" id="player3-jrc" onChange="updatePlayers()" /> <label class="jrc" for="player3-jrc">JRC</label> <span class="sharevalue jrc-light" id="player3-jrc-value"></span></div>
+                <div class="row hr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player3-hr" onChange="updatePlayers()" /> <label class="hr" for="player3-hr">HR</label> <span class="sharevalue hr-light" id="player3-hr-value"></span></div>
+                <div class="row msr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player3-msr" onChange="updatePlayers()" /> <label class="msr" for="player3-msr">MSR</label> <span class="sharevalue msr-light" id="player3-msr-value"></span></div>
+                <div class="row esr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player3-esr" onChange="updatePlayers()" /> <label class="esr" for="player3-esr">ESR</label> <span class="sharevalue esr-light" id="player3-esr-value"></span></div>
+                <div class="row sr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player3-sr" onChange="updatePlayers()" /> <label class="sr" for="player3-sr">SR</label> <span class="sharevalue sr-light" id="player3-sr-value"></span></div>
+                <div class="row cr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player3-cr" onChange="updatePlayers()" /> <label class="cr" for="player3-cr">CR</label> <span class="sharevalue cr-light" id="player3-cr-value"></span></div>
+                <div class="row cbr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player3-cbr" onChange="updatePlayers()" /> <label class="cbr" for="player3-cbr">CBR</label> <span class="sharevalue cbr-light" id="player3-cbr-value"></span></div>
+            </div>
+        </div>
+
+        <div class="row-player">
+            <h3>Player 4: <span id="player4-heading"></span></h3>
+            <div class="row"><label for="player4-name">Name: </label> <input onChange="updatePlayers()" type="text" id="player4-name" /></div>
+            <div class="row"><label for="player4-cash">Cash: </label> <input class="cash" onChange="updatePlayers()" type="text" inputmode="numeric" min="0" id="player4-cash" /></div>
+            <div class="row">Shares held:</div>
+            <div class="shares">
+                <div class="row jnr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player4-jnr" onChange="updatePlayers()" /> <label class="jnr" for="player4-jnr">JNR</label> <span class="sharevalue jnr-light" id="player4-jnr-value"></span></div>
+                <div class="row npr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player4-npr" onChange="updatePlayers()" /> <label class="npr" for="player4-npr">NPR</label> <span class="sharevalue npr-light" id="player4-npr-value"></span></div>
+                <div class="row scr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player4-scr" onChange="updatePlayers()" /> <label class="scr" for="player4-scr">SCR</label> <span class="sharevalue scr-light" id="player4-scr-value"></span></div>
+                <div class="row ir-share"><input type="text" inputmode="numeric" min="0" max="10" id="player4-ir" onChange="updatePlayers()" /> <label class="ir" for="player4-ir">IR</label> <span class="sharevalue ir-light" id="player4-ir-value"></span></div>
+                <div class="row bsr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player4-bsr" onChange="updatePlayers()" /> <label class="bsr" for="player4-bsr">BSR</label> <span class="sharevalue bsr-light" id="player4-bsr-value"></span></div>
+                <div class="row jur-share"><input type="text" inputmode="numeric" min="0" max="10" id="player4-jur" onChange="updatePlayers()" /> <label class="jur" for="player4-jur">JUR</label> <span class="sharevalue jur-light" id="player4-jur-value"></span></div>
+                <div class="row jrc-share"><input type="text" inputmode="numeric" min="0" max="10" id="player4-jrc" onChange="updatePlayers()" /> <label class="jrc" for="player4-jrc">JRC</label> <span class="sharevalue jrc-light" id="player4-jrc-value"></span></div>
+                <div class="row hr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player4-hr" onChange="updatePlayers()" /> <label class="hr" for="player4-hr">HR</label> <span class="sharevalue hr-light" id="player4-hr-value"></span></div>
+                <div class="row msr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player4-msr" onChange="updatePlayers()" /> <label class="msr" for="player4-msr">MSR</label> <span class="sharevalue msr-light" id="player4-msr-value"></span></div>
+                <div class="row esr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player4-esr" onChange="updatePlayers()" /> <label class="esr" for="player4-esr">ESR</label> <span class="sharevalue esr-light" id="player4-esr-value"></span></div>
+                <div class="row sr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player4-sr" onChange="updatePlayers()" /> <label class="sr" for="player4-sr">SR</label> <span class="sharevalue sr-light" id="player4-sr-value"></span></div>
+                <div class="row cr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player4-cr" onChange="updatePlayers()" /> <label class="cr" for="player4-cr">CR</label> <span class="sharevalue cr-light" id="player4-cr-value"></span></div>
+                <div class="row cbr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player4-cbr" onChange="updatePlayers()" /> <label class="cbr" for="player4-cbr">CBR</label> <span class="sharevalue cbr-light" id="player4-cbr-value"></span></div>
+            </div>
+        </div>
+
+        <div class="row-player">
+            <h3>Player 5: <span id="player5-heading"></span></h3>
+            <div class="row"><label for="player5-name">Name: </label> <input onChange="updatePlayers()" type="text" id="player5-name" /></div>
+            <div class="row"><label for="player5-cash">Cash: </label> <input class="cash" onChange="updatePlayers()" type="text" inputmode="numeric" min="0" id="player5-cash" /></div>
+            <div class="row">Shares held:</div>
+            <div class="shares">
+                <div class="row jnr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player5-jnr" onChange="updatePlayers()" /> <label class="jnr" for="player5-jnr">JNR</label> <span class="sharevalue jnr-light" id="player5-jnr-value"></span></div>
+                <div class="row npr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player5-npr" onChange="updatePlayers()" /> <label class="npr" for="player5-npr">NPR</label> <span class="sharevalue npr-light" id="player5-npr-value"></span></div>
+                <div class="row scr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player5-scr" onChange="updatePlayers()" /> <label class="scr" for="player5-scr">SCR</label> <span class="sharevalue scr-light" id="player5-scr-value"></span></div>
+                <div class="row ir-share"><input type="text" inputmode="numeric" min="0" max="10" id="player5-ir" onChange="updatePlayers()" /> <label class="ir" for="player5-ir">IR</label> <span class="sharevalue ir-light" id="player5-ir-value"></span></div>
+                <div class="row bsr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player5-bsr" onChange="updatePlayers()" /> <label class="bsr" for="player5-bsr">BSR</label> <span class="sharevalue bsr-light" id="player5-bsr-value"></span></div>
+                <div class="row jur-share"><input type="text" inputmode="numeric" min="0" max="10" id="player5-jur" onChange="updatePlayers()" /> <label class="jur" for="player5-jur">JUR</label> <span class="sharevalue jur-light" id="player5-jur-value"></span></div>
+                <div class="row jrc-share"><input type="text" inputmode="numeric" min="0" max="10" id="player5-jrc" onChange="updatePlayers()" /> <label class="jrc" for="player5-jrc">JRC</label> <span class="sharevalue jrc-light" id="player5-jrc-value"></span></div>
+                <div class="row hr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player5-hr" onChange="updatePlayers()" /> <label class="hr" for="player5-hr">HR</label> <span class="sharevalue hr-light" id="player5-hr-value"></span></div>
+                <div class="row msr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player5-msr" onChange="updatePlayers()" /> <label class="msr" for="player5-msr">MSR</label> <span class="sharevalue msr-light" id="player5-msr-value"></span></div>
+                <div class="row esr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player5-esr" onChange="updatePlayers()" /> <label class="esr" for="player5-esr">ESR</label> <span class="sharevalue esr-light" id="player5-esr-value"></span></div>
+                <div class="row sr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player5-sr" onChange="updatePlayers()" /> <label class="sr" for="player5-sr">SR</label> <span class="sharevalue sr-light" id="player5-sr-value"></span></div>
+                <div class="row cr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player5-cr" onChange="updatePlayers()" /> <label class="cr" for="player5-cr">CR</label> <span class="sharevalue cr-light" id="player5-cr-value"></span></div>
+                <div class="row cbr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player5-cbr" onChange="updatePlayers()" /> <label class="cbr" for="player5-cbr">CBR</label> <span class="sharevalue cbr-light" id="player5-cbr-value"></span></div>
+            </div>
+        </div>
+
+        <h2>Player summary</h2>
+
+        <table id="playersummary">
+            <thead>
+                <tr>
+                    <th class="name">Name</th>
+                    <th>Cash</th>
+                    <th>Portfolio</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+
+        <footer>
+            <p>18 BosWash is designed by Michael Carter, Anthony Fryer, John Harres, and Nick Neylon and published by GMT Games.
+                This score calculator is developed by Mikko Saari.</p>
+                
+            <p>Version 1.2, 17.11.2025.</p>
+            <p>For bug reports and suggestions, post an issue in <a href="https://codeberg.org/msaari/18-boswash">the Codeberg repo</a>.
+                Feel free to modify this, but please share if you come up with something useful.</p>
+            <p>To do -list:<br />
+                &mdash; Prevent companies from owning too many trains<br />
+                &mdash; Prevent companies from owning too many shares<br />
+                &mdash; Warn if too many shares from a company are owned<br />
+            </p>
+        </footer>
+    </body>
+</html>
