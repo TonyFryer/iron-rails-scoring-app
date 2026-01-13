@@ -2,6 +2,29 @@ function getValue(elementID) {
     return value = document.getElementById(elementID).value;
 }
 
+function getStationValue (elementID) {
+    const el = document.getElementById(elementID);
+    if (!el || el.value === undefined) {
+        return 0;
+    }
+
+    var value = parseInt(document.getElementById(elementID).value);
+    value = isNaN(value) ? 0 : value;
+    if (value === 2)
+        return 40;
+
+    if (value === 3)
+        return 100;
+
+    if (value === 4)
+        return 180;
+
+    if (value === 5)
+        return 280;
+
+    return 0;
+}
+
 // function getIntegerValue(elementID) {
 //     var value = parseInt(document.getElementById(elementID).value, 10);
 //     value = isNaN(value) ? 0 : value;
@@ -76,10 +99,18 @@ function calculate() {
         value = getIntegerValue(companyId + '-sharevalue');
         assets += ownSharesHeld * value;
         assets += getIntegerValue(companyId + "-cash");
+        assets += getStationValue(companyId + "-stations")
+
+        if (isChecked(companyId + "-6Ex3")) {
+            assets += 1300;
+        }
         if (isChecked(companyId + "-4x3")) {
             assets += 1100;
         }
         if (isChecked(companyId + "-3x3")) {
+            assets += 900;
+        }
+        if (isChecked(companyId + "-2x4")) {
             assets += 900;
         }
         if (isChecked(companyId + "-4x2")) {
@@ -88,17 +119,35 @@ function calculate() {
         if (isChecked(companyId + "-3x2")) {
             assets += 700;
         }
+        if (isChecked(companyId + "-6")) {
+            assets += 600;
+        }
+        if (isChecked(companyId + "-8")) {
+            assets += 700;
+        }
         if (isChecked(companyId + "-4_1")) {
             assets += 450;
         }
         if (isChecked(companyId + "-4_2")) {
             assets += 450;
         }
+        if (isChecked(companyId + "-4T_1")) {
+            assets += 500;
+        }
+        if (isChecked(companyId + "-4T_2")) {
+            assets += 500;
+        }
         if (isChecked(companyId + "-3_1")) {
             assets += 300;
         }
         if (isChecked(companyId + "-3_2")) {
             assets += 300;
+        }
+        if (isChecked(companyId + "-3T_1")) {
+            assets += 350;
+        }
+        if (isChecked(companyId + "-3T_2")) {
+            assets += 350;
         }
         if (isChecked(companyId + "-2_1")) {
             assets += 180;
