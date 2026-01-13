@@ -2,7 +2,17 @@ function getValue(elementID) {
     return value = document.getElementById(elementID).value;
 }
 
-function getStationValue (elementID) {
+function getPrivateCompanyValue(elementID) {
+    const el = document.getElementById(elementID);
+    if (!el || el.value === undefined) {
+        return 0;
+    }
+
+    var value = parseInt(document.getElementById(elementID).value);
+    return value = isNaN(value) ? 0 : value;
+}
+
+function getStationValue(elementID) {
     const el = document.getElementById(elementID);
     if (!el || el.value === undefined) {
         return 0;
@@ -100,6 +110,7 @@ function calculate() {
         assets += ownSharesHeld * value;
         assets += getIntegerValue(companyId + "-cash");
         assets += getStationValue(companyId + "-stations")
+        assets += getPrivateCompanyValue(companyId + "-private")
 
         if (isChecked(companyId + "-6Ex3")) {
             assets += 1300;
