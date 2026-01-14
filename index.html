@@ -907,6 +907,28 @@
             </div>
         </div>
 
+        <div class="row-player">
+            <h3>Player 6: <span id="player6-heading"></span></h3>
+            <div class="row"><label for="player6-name">Name: </label> <input onChange="updatePlayers()" type="text" id="player6-name" /></div>
+            <div class="row"><label for="player6-cash">Cash: </label> <input class="cash" onChange="updatePlayers()" type="text" inputmode="numeric" min="0" id="player6-cash" /></div>
+            <div class="row">Shares held:</div>
+            <div class="shares">
+                <div class="row jnr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player6-jnr" onChange="updatePlayers()" /> <label class="jnr" for="player6-jnr">JNR</label> <span class="sharevalue jnr-light" id="player6-jnr-value"></span></div>
+                <div class="row npr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player6-npr" onChange="updatePlayers()" /> <label class="npr" for="player6-npr">NPR</label> <span class="sharevalue npr-light" id="player6-npr-value"></span></div>
+                <div class="row scr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player6-scr" onChange="updatePlayers()" /> <label class="scr" for="player6-scr">SCR</label> <span class="sharevalue scr-light" id="player6-scr-value"></span></div>
+                <div class="row ir-share"><input type="text" inputmode="numeric" min="0" max="10" id="player6-ir" onChange="updatePlayers()" /> <label class="ir" for="player6-ir">IR</label> <span class="sharevalue ir-light" id="player6-ir-value"></span></div>
+                <div class="row bsr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player6-bsr" onChange="updatePlayers()" /> <label class="bsr" for="player6-bsr">BSR</label> <span class="sharevalue bsr-light" id="player6-bsr-value"></span></div>
+                <div class="row jur-share"><input type="text" inputmode="numeric" min="0" max="10" id="player6-jur" onChange="updatePlayers()" /> <label class="jur" for="player6-jur">JUR</label> <span class="sharevalue jur-light" id="player6-jur-value"></span></div>
+                <div class="row jrc-share"><input type="text" inputmode="numeric" min="0" max="10" id="player6-jrc" onChange="updatePlayers()" /> <label class="jrc" for="player6-jrc">JRC</label> <span class="sharevalue jrc-light" id="player6-jrc-value"></span></div>
+                <div class="row hr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player6-hr" onChange="updatePlayers()" /> <label class="hr" for="player6-hr">HR</label> <span class="sharevalue hr-light" id="player6-hr-value"></span></div>
+                <div class="row msr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player6-msr" onChange="updatePlayers()" /> <label class="msr" for="player6-msr">MSR</label> <span class="sharevalue msr-light" id="player6-msr-value"></span></div>
+                <div class="row esr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player6-esr" onChange="updatePlayers()" /> <label class="esr" for="player6-esr">ESR</label> <span class="sharevalue esr-light" id="player6-esr-value"></span></div>
+                <div class="row sr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player6-sr" onChange="updatePlayers()" /> <label class="sr" for="player6-sr">SR</label> <span class="sharevalue sr-light" id="player6-sr-value"></span></div>
+                <div class="row cr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player6-cr" onChange="updatePlayers()" /> <label class="cr" for="player6-cr">CR</label> <span class="sharevalue cr-light" id="player6-cr-value"></span></div>
+                <div class="row cbr-share"><input type="text" inputmode="numeric" min="0" max="10" id="player6-cbr" onChange="updatePlayers()" /> <label class="cbr" for="player6-cbr">CBR</label> <span class="sharevalue cbr-light" id="player6-cbr-value"></span></div>
+            </div>
+        </div>
+
         <h2>Player summary</h2>
 
         <table id="playersummary">

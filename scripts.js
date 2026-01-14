@@ -179,7 +179,7 @@ function calculate() {
     hideCompanies();
 }
 function updatePlayers() {
-    const players = ['player1', 'player2', 'player3', 'player4', 'player5'];
+    const players = ['player1', 'player2', 'player3', 'player4', 'player5', 'player6'];
     const playerData = [];
     players.forEach((player) => {
         const name = getValue(player + '-name');
